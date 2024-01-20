@@ -64,3 +64,12 @@ Precisamos alterar essa parte, para que possamos criar nossas próprias DAGs.
 -- Change the default namespace ``kubens airflow``
 
 -- Access the airflow ``kubectl port-forward svc/airflow-webserver 8080:8080``
+
+## References
+https://www.youtube.com/watch?v=twGSLGpxAEo
+
+https://helm.sh/docs/intro/quickstart/
+
+https://github.com/ahmetb/kubectx?tab=readme-ov-file#windows-installation-using-chocolatey
+
+https://minikube.sigs.k8s.io/docs/handbook/controls/
