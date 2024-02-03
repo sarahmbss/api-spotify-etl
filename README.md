@@ -42,28 +42,35 @@ Helm helps you **manage** Kubernetes applications — Helm Charts help you defin
 
 -- Installing airflow on helm: ``helm repo add apache-airflow https://airflow.apache.org/``
 
--- Por padrão, o airflow aponta para o proprio diretorio de DAGs. Então precisamos *copiar* o pacote helm para a nossa máquina local, ao invés de baixá-lo diretamente para o cluster: 
+-- By default, airflow points directly to its own DAGs repository. So, we need to *copy* the helm package to our local machine, instead of just downloading it directly to the cluster:
 ```
 helm pull apache-airflow/airflow
 tar zxvf airflow-1.11.0.tgz
 ```
 
--- Toda vez que instala o helm, ele aponta para um arquivo values.yaml
+-- Everytime we install helm, it points to a file called values.yaml
 
--- No caso do airflow, no final do arquivo, na parte de ``gitSync``, ele aponta diretamente para o arquivo git do próprio airflow. 
-Precisamos alterar essa parte, para que possamos criar nossas próprias DAGs.
+-- On the case of the airflow, at the end of the file at the part of  ``gitSync``, it points directly to the git file of the own airflow.
+We need to alter that part, so that we can create our own DAGs.
 
--- Se tiver repositório privado: criar um arquivo encoding com **nome** e **token** do git, e atualizar o yaml com o seguinte comando: ``kubectl apply -f git-secret.yaml -n airflow``
+-- In case of private repository: create a file named encoding with git's **name** and **token**, and update yaml with the following command: ``kubectl apply -f git-secret.yaml -n airflow``
 
--- Caso tenha helm rodando mas quer alterar alguns valores: ``helm upgrade --install airflow airflow``
+-- In case you already have a helm, but you want to alter some values: ``helm upgrade --install airflow airflow``
 
--- Depois, executamos o seguinte comando: ``helm install airflow airflow -n airflow --create-namespace``
+-- After that, execute the command: ``helm install airflow airflow -n airflow --create-namespace``
 
 -- Check is the pods on the namespaces are ok ``k9s -n airflow``
 
 -- Change the default namespace ``kubens airflow``
 
 -- Access the airflow ``kubectl port-forward svc/airflow-webserver 8080:8080``
+
+## Database diagram
+
+In order to build the pipeline with Airflow, we need to put the data somewhere. So, we will be using Google Big Query.
+The following image shows our tables and their relationships.
+
+![Database Model](img/database.png)
 
 ## References
 https://www.youtube.com/watch?v=twGSLGpxAEo
