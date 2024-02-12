@@ -79,8 +79,8 @@ airflowVersion: "2.7.1"
 # Images
 images:
   airflow:
-    repository: sarahmbs/airflow-packages
-    tag: latest
+    repository: ~
+    tag: ~
     pullPolicy: IfNotPresent
   # To avoid images with user code, you can turn this to 'true' and
   # all the 'run-airflow-migrations' and 'wait-for-airflow-migrations' containers/jobs
