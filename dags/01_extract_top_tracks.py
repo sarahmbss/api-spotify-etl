@@ -3,13 +3,14 @@ from airflow.decorators import dag, task
 from airflow.utils.task_group import TaskGroup
 from airflow.models.baseoperator import chain
 from airflow import DAG
+import datetime
 from airflow.operators.dummy import DummyOperator
 
 
 @dag(
     dag_id="teste",
+    start_date=datetime.datetime(2024, 2, 12)
 )
-
 # init main function
 def load_data():
 
