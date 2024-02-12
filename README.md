@@ -59,7 +59,7 @@ We need to alter that part, so that we can create our own DAGs.
 
 -- After that, execute the command: ``helm install airflow airflow -n airflow --create-namespace``
 
--- Check is the pods on the namespaces are ok ``k9s -n airflow``
+-- Check if the pods on the namespaces are ok ``k9s -n airflow``
 
 -- Change the default namespace ``kubens airflow``
 
