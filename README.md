@@ -67,7 +67,7 @@ We need to alter that part, so that we can create our own DAGs.
 
 ## Database diagram
 
-In order to build the pipeline with Airflow, we need to put the data somewhere. So, we will be using Google Big Query.
+In order to build the pipeline with Airflow, we need to put the data somewhere. So, we will be using MySQL.
 The following image shows our tables and their relationships.
 
 ![Database Model](img/database.png)

@@ -71,13 +71,13 @@ class Spotify:
         playlists = self.spot.current_user_playlists()['items']
         return playlists
         
-    def get_user_top_tracks(self):
+    def get_user_top_tracks(self, ti, **kwargs):
         '''
             Description: 
                 - Get the most heard tracks by the user
         '''
-        top_tracks = self.spot.current_user_top_tracks(limit=100, offset=0,time_range='short_term')['items']           
-        return top_tracks
+        top_tracks = self.spot.current_user_top_tracks(limit=kwargs['limit'], offset=0,time_range=kwargs['time_range'])['items']  
+        ti.xcom_push(key='user_top_tracks', value=top_tracks)         
 
     def get_recommendations(self):
         '''
