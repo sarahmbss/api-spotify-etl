@@ -82,9 +82,6 @@ images:
     repository: ~
     tag: ~
     pullPolicy: IfNotPresent
-    extraPipPackages:
-    - "spotipy==2.23.0"
-    - "SQLAlchemy==1.4.51"
   # To avoid images with user code, you can turn this to 'true' and
   # all the 'run-airflow-migrations' and 'wait-for-airflow-migrations' containers/jobs
   # will use the images from 'defaultAirflowRepository:defaultAirflowTag' values
@@ -274,6 +271,10 @@ allowPodLaunching: true
 env: []
 # - name: ""
 #   value: ""
+
+extraPipPackages:
+  - "spotipy==2.23.0"
+  - "SQLAlchemy==1.4.51"
 
 # Volumes for all airflow containers
 volumes: []
