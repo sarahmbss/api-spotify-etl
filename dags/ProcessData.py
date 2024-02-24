@@ -9,7 +9,7 @@ config.read('config.ini')
 class Processing:
 
     def insert_df_mysql(self, df: pd.DataFrame, table: str):
-        engine = sqlalchemy.create_engine(f'mysql+pyodbc://{config['UID']}:{config['PWD']}@{config['HOST']}:3306/{config['DATABASE']}')
+        engine = sqlalchemy.create_engine(f'mysql+pyodbc://{config['BANCO']['UID']}:{config['BANCO']['PWD']}@{config['BANCO']['HOST']}:3306/{config['BANCO']['DATABASE']}')
         df.to_sql(name=table, con=engine, if_exists = 'append', index=False)
 
     def clean_user_top_tracks(self, ti):
