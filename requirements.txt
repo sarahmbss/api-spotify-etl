@@ -1,4 +1,4 @@
-pendulum==2.1.2
+pendulum==3.0.0
 pandas==2.0.3
 spotipy==2.23.0
 SQLAlchemy==1.4.51
