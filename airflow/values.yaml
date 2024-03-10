@@ -1182,7 +1182,7 @@ webserver:
       ports:
         - port: "{{ .Values.ports.airflowUI }}"
 
-  resources: {}
+  resources:
     limits:
       cpu: 500m
       memory: 4Gi
