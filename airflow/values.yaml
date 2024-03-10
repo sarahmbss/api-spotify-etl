@@ -1183,9 +1183,9 @@ webserver:
         - port: "{{ .Values.ports.airflowUI }}"
 
   resources: {}
-  #   limits:
-  #     cpu: 100m
-  #     memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 4Gi
   #   requests:
   #     cpu: 100m
   #     memory: 128Mi
