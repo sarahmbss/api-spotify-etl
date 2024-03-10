@@ -1185,10 +1185,10 @@ webserver:
   resources:
     limits:
       cpu: 500m
-      memory: 4Gi
-  #   requests:
-  #     cpu: 100m
-  #     memory: 128Mi
+      memory: 7Gi
+    requests:
+      cpu: 500m
+      memory: 7Gi
 
   # Create initial user.
   defaultUser:
