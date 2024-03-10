@@ -10,7 +10,7 @@ from ProcessData import Processing
 
 with DAG(
      dag_id="etl-mysql-tbl-top-tracks"
-    ,start_date=datetime(2024, 2, 18)
+    ,start_date=datetime(2024, 3, 11)
     ,max_active_runs=1
     ,schedule_interval=timedelta(hours=24)
     ,catchup=False
