@@ -1,4 +1,4 @@
-# ELT process - Spotify API Data
+# ETL process - Spotify API Data
 
 ## Kubernetes
 ### How to Install 
