@@ -21,4 +21,6 @@ class Processing:
             df.loc[-1] = [song['id'],song['name'],song['artists'][0]['name'],song['album']['name'],song['popularity'],song['uri']]
             df.reset_index(inplace=True, drop=True)
 
+        print(df.head())
+
         self.insert_df_mysql(df, 'user_top_tracks')

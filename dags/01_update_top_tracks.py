@@ -5,8 +5,8 @@ from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 
-from Spotify import Spotify
-from ProcessData import Processing
+from spotify import Spotify
+from process_data import Processing
 
 with DAG(
      dag_id="etl-mysql-tbl-top-tracks"
@@ -21,7 +21,7 @@ with DAG(
 
     get_data_api = PythonOperator(
          task_id='get_top_tracks_api'
-        ,python_callable=Spotify.get_top_tracks
+        ,python_callable=Spotify.get_user_top_tracks
         ,provide_context=True
         ,op_kwargs={'limit': 50, 'time_range': 'short_term'}
     )
