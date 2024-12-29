@@ -279,10 +279,34 @@ volumes: []
 volumeMounts: []
 
 # Secrets for all airflow containers
-secret: []
-# - envName: ""
-#   secretName: ""
-#   secretKey: ""
+secret: 
+ - envName: "CLIENT_ID_ENV"
+   secretName: "client-id"
+   secretKey: "CLIENT_ID"
+ - envName: "CLIENT_SECRET_ENV"
+   secretName: "client-secret"
+   secretKey: "CLIENT_SECRET"
+ - envName: "USERNAME_ENV"
+   secretName: "username"
+   secretKey: "USERNAME"
+ - envName: "SCOPE_ENV"
+   secretName: "scope"
+   secretKey: "SCOPE"
+ - envName: "REDIRECT_URL_ENV"
+   secretName: "redirect-url"
+   secretKey: "REDIRECT_URL"
+ - envName: "UID_ENV"
+   secretName: "uid"
+   secretKey: "UID"
+ - envName: "PWD_ENV"
+   secretName: "pwd"
+   secretKey: "PWD"
+ - envName: "HOST_ENV"
+   secretName: "host"
+   secretKey: "HOST"
+ - envName: "DATABASE_ENV"
+   secretName: "database"
+   secretKey: "DATABASE"
 
 # Enables selected built-in secrets that are set via environment variables by default.
 # Those secrets are provided by the Helm Chart secrets by default but in some cases you
