@@ -1,37 +1,64 @@
 from datetime import datetime, timedelta
 import pandas as pd
 
-from airflow import DAG
-from airflow.operators.dummy import DummyOperator
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.empty import EmptyOperator
+from airflow.decorators import dag, task
 
-from spotify import Spotify
-from process_data import Processing
+from util import Util
 
-with DAG(
+@dag(
      dag_id="etl-mysql-tbl-top-tracks"
-    ,start_date=datetime(2024, 3, 11)
+    ,start_date=datetime(2024, 12, 29)
     ,max_active_runs=1
     ,schedule_interval=timedelta(hours=24)
     ,catchup=False
-    ,tags=['etl','mysql','top_tracks']
-) as dag:
+    ,tags=['etl','mysql','user_top_tracks']
+)
+
+def elt_tbl_top_tracks():
+    '''
+    Description:
+        - Responsible to control the execution flow of this DAG
+    '''
     
-    init = DummyOperator(task_id='init')
+    start = EmptyOperator(task_id='start')
 
-    get_data_api = PythonOperator(
-         task_id='get_top_tracks_api'
-        ,python_callable=Spotify.get_user_top_tracks
-        ,provide_context=True
-        ,op_kwargs={'limit': 50, 'time_range': 'short_term'}
-    )
+    @task
+    def get_user_top_tracks(**kwargs):
+        '''
+        Description: 
+            - Get the most listened tracks by the user
 
-    clean_data = PythonOperator(
-         task_id='clean_insert_data_mysql'
-        ,python_callable=Processing.clean_user_top_tracks
-        ,provide_context=True
-    )
+        Arguments:
+            - limit: number of songs that will be searched
+            - time_range: number of months to be considered
+        '''
+        spot_credential = Util.get_spotify_credential()
+        top_tracks = spot_credential.current_user_top_tracks(limit=kwargs['limit'], offset=0, time_range=kwargs['time_range'])['items']  
+        return top_tracks
 
-    finish = DummyOperator(task_id='finish')
+    @task
+    def clean_user_top_tracks():
+        '''
+        Description: 
+            - Clean API response and upload it on the database
+        '''
 
-    init >> get_data_api >> clean_data >> finish
+        df = pd.DataFrame([], columns=['song_id','song_name','artist_name','album_name','popularity','uri'])
+
+        for song in top_tracks['items']:
+            df.loc[-1] = [song['id'],song['name'],song['artists'][0]['name'],song['album']['name'],song['popularity'],song['uri']]
+            df.reset_index(inplace=True, drop=True)
+
+        print(df.head())
+
+        Util.insert_df_mysql(df, 'user_top_tracks')
+
+    finish = EmptyOperator(task_id='finish')
+
+    top_tracks = get_user_top_tracks({'limit': 50, 'time_range': 'short_term'})
+    clean_top_tracks = clean_user_top_tracks()
+
+    start >> top_tracks >> clean_top_tracks >> finish
+
+elt_tbl_top_tracks()
