@@ -34,7 +34,9 @@ def etl_tbl_top_tracks() -> None:
             - time_range: number of months to be considered
         '''
         spot_credential = Util.get_spotify_credential()
+        print('Success on getting the credentials, starting API request...')
         top_tracks = spot_credential.current_user_top_tracks(limit=_limit, offset=0, time_range=_time_range)['items']  
+        print('Request finished!')
         return top_tracks
 
     @task
