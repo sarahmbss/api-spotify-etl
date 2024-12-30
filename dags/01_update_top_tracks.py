@@ -15,7 +15,7 @@ from util import Util
     ,tags=['etl','mysql','user_top_tracks']
 )
 
-def elt_tbl_top_tracks():
+def etl_tbl_top_tracks() -> None:
     '''
     Description:
         - Responsible to control the execution flow of this DAG
@@ -24,7 +24,7 @@ def elt_tbl_top_tracks():
     start = EmptyOperator(task_id='start')
 
     @task
-    def get_user_top_tracks(**kwargs):
+    def get_user_top_tracks(**kwargs) -> dict:
         '''
         Description: 
             - Get the most listened tracks by the user
@@ -38,7 +38,7 @@ def elt_tbl_top_tracks():
         return top_tracks
 
     @task
-    def clean_user_top_tracks():
+    def clean_user_top_tracks() -> None:
         '''
         Description: 
             - Clean API response and upload it on the database
@@ -61,4 +61,4 @@ def elt_tbl_top_tracks():
 
     start >> top_tracks >> clean_top_tracks >> finish
 
-elt_tbl_top_tracks()
+etl_tbl_top_tracks()
