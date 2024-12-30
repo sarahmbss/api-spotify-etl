@@ -19,5 +19,5 @@ class Util:
 
     @staticmethod
     def insert_df_mysql(df: pd.DataFrame, table: str):
-        engine = sqlalchemy.create_engine(f"mysql+pyodbc://{os.getenv("UID_ENV")}:{os.getenv("PWD_ENV")}@{os.getenv("HOST_ENV")}:3306/{os.getenv("DATABASE_ENV")}")
+        engine = sqlalchemy.create_engine(f'mysql+pyodbc://{os.getenv("UID_ENV")}:{os.getenv("PWD_ENV")}@{os.getenv("HOST_ENV")}:3306/{os.getenv("DATABASE_ENV")}')
         df.to_sql(name=table, con=engine, if_exists = 'append', index=False)
