@@ -24,7 +24,7 @@ def etl_tbl_top_tracks() -> None:
     start = EmptyOperator(task_id='start')
 
     @task
-    def get_user_top_tracks(**kwargs) -> dict:
+    def get_user_top_tracks(_limit: int, _time_range: str) -> dict:
         '''
         Description: 
             - Get the most listened tracks by the user
@@ -34,7 +34,7 @@ def etl_tbl_top_tracks() -> None:
             - time_range: number of months to be considered
         '''
         spot_credential = Util.get_spotify_credential()
-        top_tracks = spot_credential.current_user_top_tracks(limit=kwargs['limit'], offset=0, time_range=kwargs['time_range'])['items']  
+        top_tracks = spot_credential.current_user_top_tracks(limit=_limit, offset=0, time_range=_time_range)['items']  
         return top_tracks
 
     @task
@@ -56,7 +56,7 @@ def etl_tbl_top_tracks() -> None:
 
     finish = EmptyOperator(task_id='finish')
 
-    top_tracks = get_user_top_tracks({'limit': 50, 'time_range': 'short_term'})
+    top_tracks = get_user_top_tracks(50, 'short_term')
     clean_top_tracks = clean_user_top_tracks()
 
     start >> top_tracks >> clean_top_tracks >> finish
