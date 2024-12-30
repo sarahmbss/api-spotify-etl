@@ -13,6 +13,7 @@ class Util:
         USERNAME = os.getenv("USERNAME_ENV")
         SCOPE = os.getenv("SCOPE_ENV")
         REDIRECT_URL = os.getenv("REDIRECT_URL_ENV")
+        print(f'Using token for username {USERNAME}')
         token = util.prompt_for_user_token(client_id=CLIENT_ID, client_secret=CLIENT_SECRET, username=USERNAME, scope=SCOPE, redirect_uri=REDIRECT_URL)
         spot = spotipy.Spotify(auth=token)
         return spot
